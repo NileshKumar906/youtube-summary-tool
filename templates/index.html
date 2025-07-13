@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube AI Summarizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary: #008080;
+            --light-bg: #f9f9f9;
+            --text-dark: #333;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #006666;
+        }
+
+        .output-box {
+            margin-top: 25px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 12px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+            background: #f5f5f5;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            textarea {
+                height: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube AI Video Summarizer</h1>
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            <label for="youtube_url">YouTube Video URL:</label>
+            <input type="text" name="youtube_url" placeholder="e.g. https://www.youtube.com/watch?v=abcd1234" required>
+
+            <label for="language">Translate summary to:</label>
+            <select name="language">
+                <option value="en" {% if selected_language == "en" %}selected{% endif %}>English</option>
+                <option value="hi" {% if selected_language == "hi" %}selected{% endif %}>Hindi</option>
+                <option value="mr" {% if selected_language == "mr" %}selected{% endif %}>Marathi</option>
+                <option value="ta" {% if selected_language == "ta" %}selected{% endif %}>Tamil</option>
+            </select>
+
+            <button type="submit">Generate Summary</button>
+        </form>
+
+        {% if summary %}
+        <div class="output-box">
+            <h2>Original Summary:</h2>
+            <textarea readonly>{{ summary }}</textarea>
+        </div>
+        {% endif %}
+
+        {% if translated_summary %}
+        <div class="output-box">
+            <h2>Translated Summary:</h2>
+            <textarea readonly>{{ translated_summary }}</textarea>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
