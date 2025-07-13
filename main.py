@@ -74,3 +74,6 @@ def index():
         error=error,
         selected_language=selected_language
     )
+if __name__ == "__main__":
+    app.run(debug=True)
+
